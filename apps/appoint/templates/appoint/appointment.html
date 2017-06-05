@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Appointments</title>
+  </head>
+
+  <body>
+    <script>
+        n =  new Date();
+        y = n.getFullYear();
+        m = n.getMonth() + 1;
+        d = n.getDate();
+        document.getElementById("date").innerHTML = m + "/" + d + "/" + y;
+    </script>
+      <h1>Welcome, {{request.session.user.username}} </h1>
+      <p>Here are your appointments for today <p id="date"></p> </p>
+      <table>
+            <thread>
+              <tr>
+                <th>Tasks</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th>Action</th>
+                <th>Edit</th>
+                <th>ID</th>
+              </tr>
+            </thread>
+            <tbody>
+              {% if today_appoint %}
+              {% for today_ap in today_appoint %}
+              <tr>
+                <td>{{today_ap.task}}</td>
+                <td>{{today_ap.time}}</td>
+                <td>{{today_ap.status}}</td>
+                <td><a href={% url 'appoint:delete' today_ap.id %}>Delete</a></td>
+                <td><a href={% url 'appoint:edit' today_ap.id %}>Edit</a></td>
+                <!-- <td><a href='/delete/{{today_ap.id}}'>ID</td>
+                <td>{{today_ap.id}}</td> -->
+              </tr>
+              {% endfor %}
+              {% endif %}
+            </tbody>
+          </table>
+      <p> Your other appointments:</p>
+    <table>
+      <thread>
+        <tr>
+          <th>Tasks</th>
+          <th>Date</th>
+          <th>Time</th>
+        </tr>
+      </thread>
+      <tbody>
+        {% if other_appoint %}
+        {% for ap in other_appoint %}
+        <tr>
+          <td>{{ap.task}}</td>
+          <td>{{ap.date}}</td>
+          <td>{{ap.time}}</td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+      </tbody>
+    </table>
+
+      <h1>Add Appointment:</h1>
+      {% if messages %}
+  {% for message in messages %}
+  <p>{{message}}</p>
+  {% endfor %}
+  {% endif %}
+      <form action="{% url 'appoint:addappoint' %}" method="post">
+        {% csrf_token %}
+        Date: <input type="date" name="date" >
+        Time: <input type="time" name="time" >
+        Tasks: <input type="text" name="task" >
+        <input type="submit" name="type" value="Add">
+      </form>
+  </body>
+</html>

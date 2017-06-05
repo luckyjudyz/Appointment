@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Update Appointment</title>
+  </head>
+  <body>
+    <li><a href="{% url 'appoint:appointments' %}">Dashboard</a></li>
+    <li><a href="{% url 'appoint:logout' %}">Logout</a></li>
+    <form action="{% url 'appoint:edit' %}" method="post">
+      {% csrf_token %}
+      Tasks: <input type="text" name="task">
+      Status: <select>
+                <option value="Done">Done</option>
+                <option value="Pending">Pending</option>
+                <option value="Missed">Missed</option>
+              </select>
+      Date: <input type="date" name="date">
+      Time: <input type="time" name="time">
+      <input type="submit" name="type" value="Update">
+    </form>
+  </body>
+</html>

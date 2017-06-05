@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Welcome</title>
+  </head>
+  <body>
+    {% if messages %}
+{% for message in messages %}
+<p>{{message}}</p>
+{% endfor %}
+{% endif %}
+<h1>Registration</h1>
+<form action="{% url 'appoint:register' %}" method="post">
+  {% csrf_token %}
+  Name: <input type="text" name="username" >
+  Email: <input type="email" name="email" >
+  Password: <input type="password" name="password" >
+  <p>*Password should be at least 8 characters</p>
+  Confirm PW: <input type="password" name="confirmpass" >
+  Date of Birth: <input type="date" name="dob">
+  <input type="submit" name="type" value="Register">
+</form>
+<h1>Login</h1>
+<form action="{% url 'appoint:login' %}" method="post">
+  {% csrf_token %}
+  <input type="email" name="email" value="Email">
+  <input type="password" name="password" value="Password">
+  <input type="submit" name="type" value="Login">
+  </body>
+</html>
